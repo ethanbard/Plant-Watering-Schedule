@@ -17,6 +17,9 @@ class App extends Component {
     //Watering dates array
     var wateringDates = new Array();
 
+    var startDate = new Date();
+    var nextMonday = 0;
+
     for (var i = 0; i < plants.length; i++) {
         //Extract the watering interval from the JSON
         var waterIndex = plants[i].water_after.indexOf(" ");
@@ -26,9 +29,7 @@ class App extends Component {
         var numberOfDays = 84 / waterAfter;
 
         //Start from the Monday after today
-        var startDate = new Date();
         var day = startDate.getDay();
-        var nextMonday = 0;
 
         if (day == 0) { //If today is Sunday
           //Increment the current date by 1

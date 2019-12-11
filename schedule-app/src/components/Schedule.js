@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PostData from '../data/Apprentice_WeGrowInTandem_Data.json';
 
 class Schedule extends Component {
 
