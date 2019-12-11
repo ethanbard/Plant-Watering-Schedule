@@ -11,10 +11,51 @@ class App extends Component {
   }
 
   render() {
+    //Import plants from JSON file
+    const plants = PostData;
+
+    //Watering dates array
+    var wateringDates = new Array();
+
+    for (var i = 0; i < plants.length; i++) {
+        //Extract the watering interval from the JSON
+        var waterIndex = plants[i].water_after.indexOf(" ");
+        var waterAfter = Number(plants[i].water_after.substring(0, waterIndex));
+
+        //Calculate the number of days this plant will need
+        var numberOfDays = 84 / waterAfter;
+
+        //Start from the Monday after today
+        var startDate = new Date();
+        var day = startDate.getDay();
+        var nextMonday = 0;
+
+        if (day == 0) { //If today is Sunday
+          //Increment the current date by 1
+          nextMonday = 1;
+        }
+        else {
+          //Increment the current date by the number of days between today and next Monday
+          nextMonday = 8 - day
+        }
+
+        startDate.setDate(startDate.getDate() + nextMonday);
+
+        //Calculate the dates this plant will need to be watered
+        var plantDates = new Array();
+        
+        for (var j = 0; j < numberOfDays; j++) {
+            plantDates.push(startDate.toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'}) + " ");
+            startDate.setDate(startDate.getDate() + waterAfter);
+        }
+
+        wateringDates.push({plantName: plants[i].name, dates: plantDates});
+    }
+    
     return (
       <div className="App">
         <h1>Tandem Plant Watering Schedule</h1>
-        <Schedule />
+        <Schedule plants={plants} wateringDates={wateringDates} />
       </div>
     );
   }
