@@ -15,7 +15,7 @@ class Schedule extends Component {
         //Start from the Monday after today
         var day = startDate.getDay();
 
-        if (day == 0) { //If today is Sunday
+        if (day === 0) { //If today is Sunday
           //Increment the current date by 1
           nextMonday = 1;
         }
@@ -52,10 +52,10 @@ class Schedule extends Component {
             var newDate = new Date(startDate.toDateString());
             
             for (var j = 0; j < numberOfDays; j++) {
-            if (newDate.getDay() == 6) {
+            if (newDate.getDay() === 6) {
                 //If the current day is Saturday, skip ahead two days
                 newDate.setDate(newDate.getDate() + 2);
-            } else if (newDate.getDay() == 0) {
+            } else if (newDate.getDay() === 0) {
                 //If the current day is Sunday, skip ahead one day
                 newDate.setDate(newDate.getDate() + 1);
             }

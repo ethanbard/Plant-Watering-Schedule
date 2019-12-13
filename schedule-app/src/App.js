@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PlantData from './data/Apprentice_WeGrowInTandem_Data.json';
-import logo from './logo.svg';
 import './App.css';
 import Schedule from './components/Schedule.js'
 
