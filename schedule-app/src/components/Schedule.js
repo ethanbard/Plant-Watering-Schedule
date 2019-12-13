@@ -6,10 +6,25 @@ class Schedule extends Component {
     render(){
 
         const plants = this.props.plants;
-        const wateringDates = this.props.wateringDates;
-        const startDate = this.props.startDate;
 
         var schedule = [];
+
+        var startDate = new Date();
+        var nextMonday = 0;
+
+        //Start from the Monday after today
+        var day = startDate.getDay();
+
+        if (day == 0) { //If today is Sunday
+          //Increment the current date by 1
+          nextMonday = 1;
+        }
+        else {
+          //Increment the current date by the number of days between today and next Monday
+          nextMonday = 8 - day
+        }
+
+        startDate.setDate(startDate.getDate() + nextMonday);
 
         //Create the schedule array
         for (var i = 0; i < 84; i++) {
@@ -20,26 +35,40 @@ class Schedule extends Component {
             }
         }
 
+        //Watering dates array
+        var wateringDates = [];
+
         for (var i = 0; i < plants.length; i++) {
             //Extract the watering interval from the JSON
             var waterIndex = plants[i].water_after.indexOf(" ");
             var waterAfter = Number(plants[i].water_after.substring(0, waterIndex));
+
+            //Calculate the number of days this plant will need
+            var numberOfDays = 84 / waterAfter;
+
+            //Calculate the dates this plant will need to be watered
+            var plantDates = [];
+
+            var newDate = new Date(startDate.toDateString());
             
-            //Add this plant to the schedule
-            for (var j = 0; j < schedule.length; j++) {
-                //If the current schedule object is a multiple of waterAfter, add the plant name
-                if (j % waterAfter == 0) {
-                    schedule[j].plants.push(plants[i].name);
-                }
+            for (var j = 0; j < numberOfDays; j++) {
+            if (newDate.getDay() == 6) {
+                //If the current day is Saturday, skip ahead two days
+                newDate.setDate(newDate.getDate() + 2);
+            } else if (newDate.getDay() == 0) {
+                //If the current day is Sunday, skip ahead one day
+                newDate.setDate(newDate.getDate() + 1);
             }
+            //Add the date to the plantDates array and move the new date ahead according to the plant schedule
+            plantDates.push(newDate.toDateString());
+            newDate.setDate(newDate.getDate() + waterAfter);
+            }
+
+            wateringDates.push({plantName: plants[i].name, dates: plantDates});
         }
 
         return(
-            <div>
-            {plants.map((plant) =>{
-                return <h2>Water the {plant.name} every {plant.water_after}</h2>
-            })}
-            <br />
+            <div className="grid-container">
             {schedule.map((schedule) =>{
                 return <WateringDate wateringDate={schedule.date} plants={wateringDates} />
             })}
