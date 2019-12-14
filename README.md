@@ -1,4 +1,4 @@
-This is my solution to the Tandem Apprenticeship Coding Challenge. It is a ReactJS project that was bootstraped with Create React App. 
+This is my solution to the Tandem Apprenticeship Coding Challenge. It is a ReactJS project that was bootstraped with Create React App. You will need to have Node.js installed on your computer to run the program.
 
 To run the app, go to the project directory in your command line and run "npm start". Your browser should open automatically. If it doesn't, open the browser and go to [http://localhost:3000].
 
