@@ -53,8 +53,8 @@ class Schedule extends Component {
             
             for (var j = 0; j < numberOfDays; j++) {
             if (newDate.getDay() === 6) {
-                //If the current day is Saturday, skip ahead two days
-                newDate.setDate(newDate.getDate() + 2);
+                //If the current day is Saturday, go back one day
+                newDate.setDate(newDate.getDate() - 1);
             } else if (newDate.getDay() === 0) {
                 //If the current day is Sunday, skip ahead one day
                 newDate.setDate(newDate.getDate() + 1);
