@@ -31,7 +31,7 @@ class Schedule extends Component {
             var newDate = new Date(startDate);
             newDate.setDate(newDate.getDate() + i);
             if ((newDate.getDay() % 6 !== 0) && (newDate.getDay() % 7 !== 0)) {
-                schedule.push({date: newDate, plants: []});
+                schedule.push(newDate);
             }
         }
 
@@ -70,7 +70,7 @@ class Schedule extends Component {
         return(
             <div className="grid-container">
             {schedule.map((schedule) =>{
-                return <WateringDate wateringDate={schedule.date} plants={wateringDates} />
+                return <WateringDate wateringDate={schedule} plants={wateringDates} />
             })}
             </div>
         );
